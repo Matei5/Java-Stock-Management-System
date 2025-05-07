@@ -4,7 +4,7 @@ import java.util.*;
 import model.*;
 
 public class productService {
-    private final List<produs> produse = new ArrayList<>();
+    private final List<Produs> produse = new ArrayList<>();
     private int nextId = 1;
     private final CategorieService categorieService;
     private final AdresaService adresaService;
@@ -61,7 +61,7 @@ public class productService {
         Adresa adresa = adresaService.creeazaAdresa(input);
         Distribuitor distribuitor = new Distribuitor(numeDistribuitor, adresa);
 
-        produs produs = new produs(nextId++, nume, pret, cantitate, categorie, distribuitor);
+        Produs produs = new Produs(nextId++, nume, pret, cantitate, categorie, distribuitor);
         produse.add(produs);
 
         System.out.println("Produs adaugat cu succes.");
@@ -73,7 +73,7 @@ public class productService {
             return;
         }
 
-        for (produs p : produse) {
+        for (Produs p : produse) {
             System.out.println(p);
         }
     }
@@ -83,7 +83,7 @@ public class productService {
         String nume = input.nextLine();
 
         boolean gasit = false;
-        for (produs p : produse) {
+        for (Produs p : produse) {
             if (p.getNume().equalsIgnoreCase(nume)) {
                 System.out.println(p);
                 gasit = true;
@@ -100,11 +100,11 @@ public class productService {
         int id = input.nextInt();
         input.nextLine();
 
-        Iterator<produs> iterator = produse.iterator();
+        Iterator<Produs> iterator = produse.iterator();
         boolean sters = false;
 
         while (iterator.hasNext()) {
-            produs p = iterator.next();
+            Produs p = iterator.next();
             if (p.getId() == id) {
                 iterator.remove();
                 sters = true;
@@ -124,11 +124,11 @@ public class productService {
             return;
         }
 
-        List<produs> produseSortate = new ArrayList<>(produse);
-        produseSortate.sort(Comparator.comparingDouble(produs::getPret));
+        List<Produs> produseSortate = new ArrayList<>(produse);
+        produseSortate.sort(Comparator.comparingDouble(Produs::getPret));
 
         System.out.println("Produse sortate dupa pret:");
-        for (produs p : produseSortate) {
+        for (Produs p : produseSortate) {
             System.out.println(p);
         }
     }
@@ -138,7 +138,7 @@ public class productService {
         String categorieCautata = input.nextLine();
 
         boolean gasit = false;
-        for (produs p : produse) {
+        for (Produs p : produse) {
             if (p.getCategorie().getNume().equalsIgnoreCase(categorieCautata)) {
                 System.out.println(p);
                 gasit = true;
@@ -158,7 +158,7 @@ public class productService {
         int cantitateNoua = input.nextInt();
         input.nextLine();
 
-        for (produs p : produse) {
+        for (Produs p : produse) {
             if (p.getId() == id) {
                 p.setCantitate(cantitateNoua);
                 System.out.println("Stoc actualizat.");
@@ -175,7 +175,7 @@ public class productService {
         input.nextLine();
 
         boolean gasit = false;
-        for (produs p : produse) {
+        for (Produs p : produse) {
             if (p.getCantitate() < prag) {
                 System.out.println(p);
                 gasit = true;
@@ -187,7 +187,7 @@ public class productService {
         }
     }
 
-    public List<produs> getProduse() {
+    public List<Produs> getProduse() {
         return produse;
     }
 }
